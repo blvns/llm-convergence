@@ -25,16 +25,6 @@ To download the spacy tokenizer run:
 python -m spacy download en_core_web_trf
 ```
 
-## Download pretrained word embeddings
-
-We use [pretrained word embeddings](https://fasttext.cc/). You can prepare them as follows:
-
-```bash
-cd data
-wget https://dl.fbaipublicfiles.com/fasttext/vectors-crawl/cc.en.300.bin.gz
-7z x cc.en.300.bin.gz
-```
-
 ## Download the data
 
 In `data/corpora`, different folders named `{corpus_name}_corpus` can be created. To create folders, download and unzip data for each corpus, follow the code below.
