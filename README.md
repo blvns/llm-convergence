@@ -3,7 +3,7 @@
 ## Getting started
 Large Language Models used in the project:
  - [Gemma3](https://storage.googleapis.com/deepmind-media/gemma/Gemma3Report.pdf)-Xb-{it/pt}, for X = {1, 4, 12, 27}
- - Llama3-Xb, for X = {1, 3, 8, 70}
+ - [Llama3](https://www.llama.com/models/llama-3/)-Xb(-Instruct), for X = {1, 3, 8, 70}
 
 ## Python version
 
