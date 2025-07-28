@@ -1,0 +1,15 @@
+{
+    "movie": {
+        "conversations": "data/corpora/movie_corpus/movie-corpus/utterances.jsonl"
+    },
+       
+    "dailydialog": {
+        "train_data": "data/corpora/dailydialog_corpus/ijcnlp_dailydialog/train/dialogues_train.txt",
+        "dev_data": "data/corpora/dailydialog_corpus/ijcnlp_dailydialog/validation/dialogues_validation.txt",
+        "test_data": "data/corpora/dailydialog_corpus/ijcnlp_dailydialog/test/dialogues_test.txt"
+    },
+    
+    "npr": {
+        "conversations": "data/corpora/npr_corpus/utterances.jsonl"
+    }
+}
