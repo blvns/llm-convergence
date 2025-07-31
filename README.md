@@ -1,4 +1,7 @@
-# Accommodation in LLMs
+# Linguistic Convergence in LLMs
+
+This is the codebase and model generations for the paper *Do language models accommodate their users? A Study of Linguistic Convergence*. You can find the paper [here](blvns.github.io/publications), which also contains more details about our experimental setup in this repo.
+
 
 ## Getting started
 Large Language Models used in the project:
@@ -80,7 +83,7 @@ To run the models you need to get a permission to use them. As mentioned in the 
 - `run_evaluation()` function: run evaluation metrics to compare model outputs with original utterances. The main use of this function is to evaluate the model output for selecting the best way the model is prompted(e.g. if to include system meta-prompt along with conversation history) and deciding the best parameter setup (here: temperature, top_k, top_p).
 
 #### How to?
-1) How to run the model on chosen corpus: 
+How to run the model on chosen corpus: 
 
 run_model has few arguments that need to be provided in order to run it:
 
@@ -99,52 +102,41 @@ Optional parameters:
 *  `--chat_template`: if to use the default chat_template of the LLM if available, default True,
 *  `--max_new_tokens`: default 40.
 
-
-Examples with settings to replicate Gemma3, LLama-3 results: 
+Example runs: 
 
 ```bash
 python  main_LLMs.py run_model --model "google/gemma3-1b-it" --hf_token "your_token" --corpus_name npr_corpus --set_name dev --paths ./data/corpora/npr_corpus/test/model_inputs.json --chat_template False
 python  main_LLMs.py run_model --model "google/gemma3-1b-pt" --hf_token "your_token" --corpus_name npr_corpus --set_name dev --paths ./data/corpora/npr_corpus/test/model_inputs.json --chat_template False
 ```
- 
- 2) How to run the evaluation on models outputs: 
-
-run_evaluation has the following arguments: 
-*  `--corpus_name`: name of the corpus: e.g. npr_corpus,
-*  `--set_name`: name of split set, choose **test**, 
-
-Example evaluation run: 
-
-```bash
-python main_LLMs.py run_evaluation --corpus_name npr_corpus --set_name test --model_folder gemma2_2b_it --model_type instruction_tuned
-```
 
 ## Stylometric analysis
 To analyse linguistic/stylometric features of the generations, you can run the `postprocess_stylometrics.py` module. You will need to set the file paths to access and save data.
-For the “original” (as referred to in the main stylometrics function), human-authored data sets, access `data/corpora/<corpus_name>/dev/dev.json`. For the “model” data set, access `LLMs/corpora/<corpus_name>/dev/outputs/<model_name>/conversations/conversations`.json
+For the “original” (as referred to in the main stylometrics function), human-authored data sets, access `data/corpora/<corpus_name>/dev/dev.json`; this is also used in the random baseline setting (with additional sampling of random utterances across conversations). For the “model” data set, access `generations/<corpus_name>/dev/outputs/<model_name>/conversations/conversations`.json.
 
-
-For accessing and reducing data generated during the analysis, file paths are structured as `data/stylometrics/<corpus_name>/<model_name>/<file_name>`. 
-To save and access results, file paths are structured as `results/<corpus_name>/stylometrics/<model_name>/<file_name>`.
-If only selected features are to be analysed, only the following functions need to be run: 
+Example postprocessing run:
 ```bash
-    main_reduce() to reduce the original corpus to only the relevant utterances
-    main_random() to generate random utterance pairs out of the original corpus for comparison 
-    main_reducemodel() to reduce the generated results to only the relevant utterances
-```
-… as well as of course the selected feature(s).
-
-The linguistic features included and corresponding functions are: 
-```bash
-Utterance length    [main_countutt(), main_uttmerge(), main_calcavg(), main_plotlength()]
-Parts of speech     [main_tag(), main_countpos(),  main_plotPOSabs(), main_pos_model(), main_pos_original(), main_pos_random(), main_percmerge(), main_vizpos()] 
-                     to calculate the linguistic accommodation metric: [main_acc(), main_mergeacc()]   
-Proper nouns        [main_tag(), main_propnoun(), main_sumpropnouns(), main_uniquepropnouns(), main_sumuniquenouns(), main_vizpropnouns()]
-Hedge words         [Download hedge_words_list_1.txt hedge_words_list_1.txt from data/stylomatrics! Then use main_hedge(), main_hedgediff(), main_avghedge(), main_hedgeviz()]
- 
-Token Novelty       [main_novelty(), main_avgnovelty()]
+python postprocess_stylometrics.py --data_path "data/path/for/setting" --setting model/human/random --corpus "corpus name" --setting_name "model name" &
 ```
 
-**Sources:** 
-The hedge word lists were created by Stepanenko (2022). Their work can be accessed [here](https://github.com/alexandrastepanenko/InvestigatingStyleGPT2/tree/main/Jupyter%20notebook).
-The Asymmetric Accommodation Metric (as applied for POS) was described by Waissbluth et. al. (2021). Their work can be accessed [here](https://github.com/elliottwaissbluth/LSA-online-arguments/tree/main).
+This generates a new statistics file, `stylometrics/analysis/<corpus_name>/<setting_name>/stats.json`, with statistics for individual utterance generations and aggregate statistics across the dataset (ALL index).
+
+You can also calculate the statistical significance between a reference and a list of target data files across various stylometric features with ``stylometrics_significance.py''. For example, 
+
+```bash
+python stylometrics_significance.py  --ref_path ./stylometrics/analysis/dailydialog/human/stats.json --corpus dailydialog --test_paths ./stylometrics/analysis/dailydialog/<model_name./stats.json ... &
+```
+
+**Citation and Contact**
+
+If you use this code for your own work, please cite the corresponding paper:
+```
+@article{blevins2025convergence,
+    title={Do language models accommodate their users? A Study of Linguistic Convergence},
+    author={Terra Blevins and Susanne Schmalwieser and Benjamin Roth},
+    year={2025},
+    archivePrefix={arXiv},
+    url={https://blvns.github.io/papers/blevins2025convergence.pdf}
+}
+```
+
+Please address any questions or comments about this codebase to t.blevins@northeastern.edu. 
