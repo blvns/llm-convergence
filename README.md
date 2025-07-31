@@ -128,7 +128,7 @@ python stylometrics_significance.py  --ref_path ./stylometrics/analysis/dailydia
 
 **Citation and Contact**
 
-If you use this code for your own work, please cite the corresponding paper:
+If you use this code for your own work, please cite the corresponding [paper](blvns.github.io/publications):
 ```
 @article{blevins2025convergence,
     title={Do language models accommodate their users? A Study of Linguistic Convergence},
