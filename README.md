@@ -120,8 +120,8 @@ python main_LLMs.py run_evaluation --corpus_name npr_corpus --set_name test --mo
 ```
 
 ## Stylometric analysis
-To analyse specific linguistic features, you should run the `main_stylometrics.py` module. You will need to set the file paths to access and save data. We recommend changing the relevant file paths via regular expressions. You will not need to change the file names. 
-For the “original” data sets (as referred to in the main stylometrics function), access `data/corpora/<corpus_name>/test/test.json`. For the “model” data set, access `LLMs/corpora/<corpus_name>/test/outputs/instruction_tuned/<model_name>/conversations/conversations`.json
+To analyse linguistic/stylometric features of the generations, you can run the `postprocess_stylometrics.py` module. You will need to set the file paths to access and save data.
+For the “original” (as referred to in the main stylometrics function), human-authored data sets, access `data/corpora/<corpus_name>/dev/dev.json`. For the “model” data set, access `LLMs/corpora/<corpus_name>/dev/outputs/<model_name>/conversations/conversations`.json
 
 
 For accessing and reducing data generated during the analysis, file paths are structured as `data/stylometrics/<corpus_name>/<model_name>/<file_name>`. 
